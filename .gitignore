@@ -1,0 +1,9 @@
+rust/target/
+go/schema-registry-server
+registry.json
+registry-data/
+*.pyc
+__pycache__/
+.env
+.idea/
+.vscode/

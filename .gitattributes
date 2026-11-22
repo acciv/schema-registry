@@ -1,0 +1,9 @@
+*.rs linguist-language=Rust
+*.go linguist-language=Go
+*.py linguist-language=Python
+*.h linguist-language=C
+*.toml linguist-language=TOML
+*.yaml linguist-language=YAML
+*.yml linguist-language=YAML
+*.sh linguist-language=Shell
+Dockerfile linguist-language=Dockerfile

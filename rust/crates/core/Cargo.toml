@@ -1,0 +1,16 @@
+[package]
+name = "schemar-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Проверка совместимости версий API-схем"
+
+[lib]
+name = "schemar_core"
+crate-type = ["cdylib", "rlib"]
+path = "src/lib.rs"
+
+[[bin]]
+name = "schemar"
+path = "src/main.rs"

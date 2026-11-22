@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {"type": "string"},
+    "email": {"type": "string"},
+    "page": {"type": "integer"},
+    "token": {"type": "string"}
+  },
+  "required": ["id", "email", "token"]
+}

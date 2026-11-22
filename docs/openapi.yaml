@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: schema-registry API
+  version: 0.1.0
+  description: Реестр версий API-схем с проверкой обратной совместимости.
+servers:
+  - url: http://localhost:8080
+paths:
+  /healthz:
+    get:
+      summary: Статус сервера
+      responses:
+        "200":
+          description: OK
+  /stats:
+    get:
+      summary: Счётчики
+      responses:
+        "200":
+          description: OK
+  /v1/check:
+    post:
+      summary: Сравнить две схемы
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [old, new]
+              properties:
+                old: {type: object}
+                new: {type: object}
+      responses:
+        "200":
+          description: Отчёт о совместимости
+  /v1/schemas:
+    get:
+      summary: Список схем
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Зарегистрировать версию схемы
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, version, schema]
+              properties:
+                name: {type: string, example: user.created}
+                version: {type: string, example: 1.0.0}
+                schema: {type: object}
+                allow_breaking: {type: boolean, default: false}
+      responses:
+        "201":
+          description: Зарегистрировано
+        "409":
+          description: Breaking change без --force
+  /v1/schemas/{name}:
+    get:
+      summary: Все версии схемы
+      parameters:
+        - {in: path, name: name, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: OK
+  /v1/schemas/{name}/{version}:
+    get:
+      summary: Конкретная версия
+      parameters:
+        - {in: path, name: name, required: true, schema: {type: string}}
+        - {in: path, name: version, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: OK
+  /v1/schemas/{name}/{version}/check:
+    post:
+      summary: Сравнить схему с сохранённой версией
+      parameters:
+        - {in: path, name: name, required: true, schema: {type: string}}
+        - {in: path, name: version, required: true, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [schema]
+              properties:
+                schema: {type: object}
+      responses:
+        "200":
+          description: Отчёт о совместимости
